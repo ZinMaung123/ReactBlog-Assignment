@@ -44,7 +44,12 @@ class Blog extends React.Component {
                 <Link to="/register">Register</Link>
               </li>
               {
-                this.state.isLogin && <li><Link to="/newArticle">Create New Article</Link></li>
+                this.state.isLogin && (
+                  <React.Fragment>
+                    <li><Link to="/articles">Articles</Link></li>
+                    <li><Link to="/newArticle">Create New Article</Link></li>
+                  </React.Fragment>
+                )
               }
             </ul>
             

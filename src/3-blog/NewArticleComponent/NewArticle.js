@@ -24,21 +24,25 @@ export default class NewArticle extends React.Component{
     createNewArticle = (e)=>{
         e.preventDefault();
         const currentList = localStorage.getItem('articles');
+        console.log('currentList: ', currentList);
         let articleArray = [];
         let newArticle = [];
         if(currentList != null){
-            articleArray = JSON.parse.currentList;
+            articleArray = JSON.parse(currentList);
         }
-
-        const id = articleArray.length + 1;
+        let id = 1;
+        if(articleArray.length !== 0){
+            const lastEle = articleArray[articleArray.length-1];
+            id = lastEle[0] + 1;
+        }        
         newArticle.push(id);
         newArticle.push(this.props.currentUser);
         newArticle.push(this.state.title);
         newArticle.push(this.state.body);
 
-        articleArray.push(JSON.stringify(newArticle));
+        articleArray.push(newArticle);
 
-        localStorage.setItem("articles", articleArray);
+        localStorage.setItem("articles",JSON.stringify(articleArray));
     }
 
     logout = (e) => {
@@ -49,7 +53,7 @@ export default class NewArticle extends React.Component{
     render(){
         return (
             <div >
-                <form action="/articles" onSubmit={this.createNewArticle}>
+                <form onSubmit={this.createNewArticle}>
                     <label htmlFor="title">Title : </label>
                     <input type='text' id="title" value={this.props.title} onChange={this.detectTitleChange} /><br/>
 

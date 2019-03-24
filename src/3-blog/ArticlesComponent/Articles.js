@@ -5,8 +5,31 @@ import Article from '../ArticleComponent/Article';
 class Articles extends React.Component{
     constructor(props){
         super(props);
+        const currentList = localStorage.getItem('articles');        
         this.state = {
-            list : []
+            list : (currentList !== null ? JSON.parse(currentList) : [])
+        }
+    }
+
+    removeArticle = (index)=>{
+        console.log("TCL: Article -> deleteArticle -> userId", this.props.currentUser);               
+        const currentList = localStorage.getItem('articles');
+        let articleArray = [];
+        if(currentList != null){
+            articleArray = JSON.parse(currentList);
+			console.log("TCL: Articles -> removeArticle -> rticleArray[index][1] === this.props.currentUser", articleArray[index][1] === this.props.currentUser)
+            if(articleArray[index][1] === this.props.currentUser){
+                articleArray.splice(index,1);
+            }
+
+            localStorage.setItem('articles',JSON.stringify(articleArray));
+
+            this.setState({
+                list : articleArray
+            });
+        }
+        else{
+            return false;
         }
     }
 
@@ -23,7 +46,7 @@ class Articles extends React.Component{
                 </form>
                 {
                     this.state.list.map ((item, index)=>{
-                        return <Article key={index} userId={this.props.currentUser} title={item[0]} body={item[1]}/>;
+                        return <Article key={index} itemIndex={index} title={item[2]} body={item[3]} removeItemEvent = {this.removeArticle}/>;
                     })
                 }
 
