@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 export default class InputForm extends React.Component{
     constructor(props){
@@ -32,4 +33,8 @@ export default class InputForm extends React.Component{
             </form>
         );
     }
+}
+
+InputForm.propTypes = {
+    formIsSubmitted: PropTypes.func.isRequired
 }

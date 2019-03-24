@@ -29,6 +29,14 @@ class ShoppingList extends React.Component{
         });
     }
 
+    removeItem = (index)=>{
+        const currentList = this.state.list;
+        currentList.splice(index,1);
+
+        this.setState({
+            list : currentList
+        });
+    }
     
     render(){
         return (
@@ -37,7 +45,7 @@ class ShoppingList extends React.Component{
                 <ItemList>
                 {
                     this.state.list.map ((item,index)=>{
-                        return <Item text={item} key={index}></Item>
+                        return <Item text={item} key={index} itemIndex = {index} removeItemEvent = {this.removeItem}></Item>
                     })
                 }
                 </ItemList>
